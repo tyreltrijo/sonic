@@ -1,0 +1,1133 @@
+--REMADE BY MELON
+
+game:GetService("StarterGui"):SetCore("SendNotification", { 
+	Title = "Melon's (FE) Scripts";
+	Text = "Loading, enjoy!";
+	Icon = "rbxthumb://type=Asset&id=7969699183&w=150&h=150"})
+Duration = 16;
+HumanDied = false
+local CountSCIFIMOVIELOL = 1
+function SCIFIMOVIELOL(Part0,Part1,Position,Angle)
+	local AlignPos = Instance.new('AlignPosition', Part1); AlignPos.Name = "AliP_"..CountSCIFIMOVIELOL
+	AlignPos.ApplyAtCenterOfMass = true;
+	AlignPos.MaxForce = 5772000--67752;
+	AlignPos.MaxVelocity = math.huge/9e110;
+	AlignPos.ReactionForceEnabled = false;
+	AlignPos.Responsiveness = 200;
+	AlignPos.RigidityEnabled = false;
+	local AlignOri = Instance.new('AlignOrientation', Part1); AlignOri.Name = "AliO_"..CountSCIFIMOVIELOL
+	AlignOri.MaxAngularVelocity = math.huge/9e110;
+	AlignOri.MaxTorque = 5772000
+	AlignOri.PrimaryAxisOnly = false;
+	AlignOri.ReactionTorqueEnabled = false;
+	AlignOri.Responsiveness = 200;
+	AlignOri.RigidityEnabled = false;
+	local AttachmentA=Instance.new('Attachment',Part1); AttachmentA.Name = "Ath_"..CountSCIFIMOVIELOL
+	local AttachmentB=Instance.new('Attachment',Part0); AttachmentB.Name = "Ath_"..CountSCIFIMOVIELOL
+	AttachmentA.Orientation = Angle or Vector3.new(0,0,0)
+	AttachmentA.Position = Position or Vector3.new(0,0,0)
+	AlignPos.Attachment1 = AttachmentA;
+	AlignPos.Attachment0 = AttachmentB;
+	AlignOri.Attachment1 = AttachmentA;
+	AlignOri.Attachment0 = AttachmentB;
+	CountSCIFIMOVIELOL = CountSCIFIMOVIELOL + 1
+	return {AlignPos,AlignOri,AttachmentA,AttachmentB}
+end
+
+if _G.netted ~= true then
+	_G.netted = true
+	coroutine.wrap(function()
+		settings().Physics.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
+		settings().Physics.AllowSleep = false
+		game:GetService("RunService").RenderStepped:Connect(function()
+			game:FindFirstChildOfClass("Players").LocalPlayer.MaximumSimulationRadius=math.pow(math.huge,math.huge)
+			sethiddenproperty(game:FindFirstChildOfClass("Players").LocalPlayer,"SimulationRadius",math.huge*math.huge)
+		end)
+	end)()
+end
+
+game:FindFirstChildOfClass("Players").LocalPlayer["Character"].Archivable = true
+local hatnameclone = {}
+for _,v in next, game:FindFirstChildOfClass("Players").LocalPlayer["Character"]:GetChildren() do
+	if v:IsA("Accessory") then
+		if hatnameclone[v.Name] then
+			if hatnameclone[v.Name] == "s" then
+				hatnameclone[v.Name] = {}
+			end
+			table.insert(hatnameclone[v.Name],v)
+		else
+			hatnameclone[v.Name] = "s"
+		end
+	end
+end
+for _,v in pairs(hatnameclone) do
+	if type(v) == "table" then
+		local num = 1
+		for _,w in pairs(v) do
+			w.Name = w.Name..num
+			num = num + 1
+		end
+	end
+end
+hatnameclone = nil
+
+local DeadChar = game:FindFirstChildOfClass("Players").LocalPlayer.Character
+
+local fldr = Instance.new("Folder",game:FindFirstChildOfClass("Players").LocalPlayer["Character"])
+fldr.Name = "DMYF"
+local CloneChar = DeadChar:Clone()
+local ANIMATIONHERE
+if CloneChar:FindFirstChild("Animate") then
+	ANIMATIONHERE = CloneChar:FindFirstChild("Animate"):Clone()
+	CloneChar:FindFirstChild("Animate"):Destroy()
+end
+if CloneChar:FindFirstChildOfClass("Folder") then CloneChar:FindFirstChildOfClass("Folder"):Destroy() end
+if CloneChar.Torso:FindFirstChild("Neck") then
+	local Clonessss = CloneChar.Torso:FindFirstChild("Neck"):Clone()
+	Clonessss.Part0 = nil
+	Clonessss.Part1 = DeadChar.Head
+	Clonessss.Parent = DeadChar.Torso
+end
+CloneChar.Parent = fldr
+CloneChar.HumanoidRootPart.CFrame = DeadChar.HumanoidRootPart.CFrame
+CloneChar.Humanoid.BreakJointsOnDeath = false
+CloneChar.Name = "non"
+CloneChar.Humanoid.DisplayDistanceType = "None"
+
+for _,v in next, DeadChar:GetChildren() do
+	if v:IsA("Accessory") then
+		local topacc = false
+		if v.Handle:FindFirstChildOfClass("Weld") then v.Handle:FindFirstChildOfClass("Weld"):Destroy() end
+		v.Handle.Massless = true
+		v.Handle.CanCollide = false
+		if v.Handle:FindFirstChildOfClass("Attachment") then
+			local ath__ = v.Handle:FindFirstChildOfClass("Attachment")
+			if ath__.Name == "HatAttachment" or ath__.Name == "HairAttachment" or ath__.Name == "FaceFrontAttachment" or ath__.Name == "FaceCenterAttachment" then
+				topacc = ath__.Name
+			end
+		end
+        local bv = Instance.new("BodyVelocity",v.Handle)
+		bv.Velocity = Vector3.new(0,0,0)
+		coroutine.wrap(function()
+			if topacc then
+				local allthings = SCIFIMOVIELOL(v.Handle,DeadChar.Torso,Vector3.new(0,1.5,0)+ (DeadChar.Head[topacc].Position + (v.Handle[topacc].Position*-1)),Vector3.new(0,0,0))
+				local normaltop = allthings[1].Attachment1
+				local alipos = allthings[1]
+				local alirot = allthings[2]
+				local p0 = v.Handle
+				local p1 = DeadChar.Head
+				alipos.Parent = CloneChar:FindFirstChild(v.Name).Handle
+				alirot.Parent = CloneChar:FindFirstChild(v.Name).Handle
+				while true do
+					game:GetService("RunService").RenderStepped:wait()
+					if HumanDied then break end
+					coroutine.wrap(function()
+						if alipos.Attachment1 == normaltop then
+							p0.CFrame = p0.CFrame:lerp((((DeadChar.Torso.CFrame * CFrame.new(0,1.5,0)) * p1[topacc].CFrame) * p0[topacc].CFrame:inverse()),1)
+						else
+							v.Handle.CFrame = v.Handle.CFrame:lerp(alipos.Attachment1.Parent.CFrame * CFrame.new(alipos.Attachment1.Position) * CFrame.Angles(math.rad(alipos.Attachment1.Rotation.X),math.rad(alipos.Attachment1.Rotation.Y),math.rad(alipos.Attachment1.Rotation.Z)),1)
+						end
+					end)()
+				end
+			else
+				SCIFIMOVIELOL(v.Handle,CloneChar[v.Name].Handle,Vector3.new(0,0,0),Vector3.new(0,0,0))
+			end
+		end)()
+    end
+end
+
+local a = DeadChar.Torso
+local b = DeadChar.HumanoidRootPart
+local c = DeadChar.Humanoid
+a.Parent = game:FindFirstChildOfClass("Workspace")
+c.Parent = game:FindFirstChildOfClass("Workspace")
+local told = a:Clone()
+local told1 = c:Clone()
+b["RootJoint"].Part0 = told
+b["RootJoint"].Part1 = DeadChar.Head
+a.Name = "torso"
+a.Neck:Destroy()
+c.Name = "Cloned Avatar"
+told.Parent = DeadChar
+told1.Parent = DeadChar
+DeadChar.PrimaryPart = told
+told1.Health = 0
+b:Destroy()
+a.Parent = DeadChar
+c.Parent = DeadChar
+told:Destroy()
+told1:Destroy()
+a.Name = "Torso"
+
+if CloneChar.Head:FindFirstChildOfClass("Decal") then CloneChar.Head:FindFirstChildOfClass("Decal").Transparency = 1 end
+if DeadChar:FindFirstChild("Animate") then DeadChar:FindFirstChild("Animate"):Destroy() end
+
+local Collider
+function UnCollide()
+    if HumanDied then Collider:Disconnect(); return end
+    --[[for _,Parts in next, CloneChar:GetChildren() do
+        if Parts:IsA("BasePart") then
+            Parts.CanCollide = false 
+        end 
+    end]]
+    for _,Parts in next, DeadChar:GetChildren() do
+        if Parts:IsA("BasePart") then
+        Parts.CanCollide = false
+        end 
+    end 
+end
+Collider = game:GetService("RunService").Stepped:Connect(UnCollide)
+
+local resetBindable = Instance.new("BindableEvent")
+resetBindable.Event:connect(function()
+    game:GetService("StarterGui"):SetCore("ResetButtonCallback", true)
+	resetBindable:Destroy()
+	HumanDied = true
+    pcall(function()
+		game:FindFirstChildOfClass("Players").LocalPlayer.Character = DeadChar
+		DeadChar.Head:Destroy()
+		DeadChar:FindFirstChildOfClass("Humanoid"):Destroy()
+		game:FindFirstChildOfClass("Players").LocalPlayer.Character = CloneChar
+		if DeadChar:FindFirstChildOfClass("Folder") then DeadChar:FindFirstChildOfClass("Folder"):Destroy() end
+	end)
+end)
+game:GetService("StarterGui"):SetCore("ResetButtonCallback", resetBindable)
+
+coroutine.wrap(function()
+    while true do
+        game:GetService("RunService").RenderStepped:wait()
+        if not CloneChar or not CloneChar:FindFirstChild("Head") or not CloneChar:FindFirstChildOfClass("Humanoid") or CloneChar:FindFirstChildOfClass("Humanoid").Health <= 0 and not DeadChar or not DeadChar:FindFirstChild("Head") or not DeadChar:FindFirstChildOfClass("Humanoid") or DeadChar:FindFirstChildOfClass("Humanoid").Health <= 0 then 
+            HumanDied = true
+            pcall(function()
+				game:FindFirstChildOfClass("Players").LocalPlayer.Character = DeadChar
+				DeadChar.Head:Destroy()
+				DeadChar:FindFirstChildOfClass("Humanoid"):Destroy()
+				game:FindFirstChildOfClass("Players").LocalPlayer.Character = CloneChar
+				if DeadChar:FindFirstChildOfClass("Folder") then DeadChar:FindFirstChildOfClass("Folder"):Destroy() end
+			end)
+            if resetBindable then
+                game:GetService("StarterGui"):SetCore("ResetButtonCallback", true)
+                resetBindable:Destroy()
+            end
+            break
+        end		
+    end
+end)()
+
+
+SCIFIMOVIELOL(DeadChar["Head"],CloneChar["Head"])
+SCIFIMOVIELOL(DeadChar["Torso"],CloneChar["Torso"])
+SCIFIMOVIELOL(DeadChar["Left Arm"],CloneChar["Left Arm"])
+SCIFIMOVIELOL(DeadChar["Right Arm"],CloneChar["Right Arm"])
+SCIFIMOVIELOL(DeadChar["Left Leg"],CloneChar["Left Leg"])
+SCIFIMOVIELOL(DeadChar["Right Leg"],CloneChar["Right Leg"])
+
+for _,v in pairs(DeadChar:GetChildren()) do
+	if v:IsA("BasePart") and v.Name ~= "Head" then
+		--[[local bv = Instance.new("BodyVelocity",v)
+		bv.Velocity = Vector3.new(0,0,0)
+		coroutine.wrap(function()
+			while true do
+				game:GetService("RunService").RenderStepped:wait()
+				if HumanDied then break end
+				v.CFrame = CloneChar[v.Name].CFrame
+			end
+		end)()]]
+	elseif v:IsA("BasePart") and v.Name == "Head" then
+		local bv = Instance.new("BodyVelocity",v)
+		bv.Velocity = Vector3.new(0,0,0)
+		coroutine.wrap(function()
+			while true do
+				game:GetService("RunService").RenderStepped:wait()
+				if HumanDied then break end
+				v.CFrame = DeadChar.Torso.CFrame * CFrame.new(0,1.5,0)
+			end
+		end)()
+	end
+end
+
+for _,BodyParts in next, CloneChar:GetDescendants() do
+if BodyParts:IsA("BasePart") or BodyParts:IsA("Part") then
+BodyParts.Transparency = 1 end end
+game:GetService("RunService").RenderStepped:wait()
+game:FindFirstChildOfClass("Players").LocalPlayer.Character = CloneChar
+game:FindFirstChildOfClass("Workspace"):FindFirstChildOfClass("Camera").CameraSubject = CloneChar.Humanoid
+
+for _,v in next, DeadChar:GetChildren() do
+	if v:IsA("Accessory") then
+		if v.Handle:FindFirstChildOfClass("Weld") then v.Handle:FindFirstChildOfClass("Weld"):Destroy() end
+	end
+end
+
+if ANIMATIONHERE then ANIMATIONHERE.Parent = CloneChar end
+
+local Player = game:GetService('Players').LocalPlayer
+repeat wait() until Player.Character
+local Character = Player.Character
+
+TrailSettings = {
+	Lifetime = 0.5,
+	Texture = 'rbxassetid://31270182',
+	--Color1 is for UpperBody and Accessories, Color2 is for Lower Body
+	Color1 = ColorSequence.new(BrickColor.new('Toothpaste').Color,BrickColor.new('Royal purple').Color),
+	Color2 = ColorSequence.new(BrickColor.new('Institutional white').Color,BrickColor.new('Toothpaste').Color),
+	AllBody = true,
+	UpperBodyOnly = false,
+	LowerBodyOnly = false,
+	Accessories = false,
+	Extras = true,
+	R15 = false, --Change to true if you're using R15
+	R15Parts = {
+		'UpperTorso',
+		'LowerTorso',
+	}
+}
+
+local Trail; --Making other Trails uses this in this Script
+
+--UpperBody Function
+UpperBody = function()
+	if TrailSettings.R15 == false then
+		A0 = Instance.new('Attachment',Character.Torso)
+		A1 = Instance.new('Attachment',Character.Head)
+	A2 = Instance.new('Attachment',Character['Right Arm'])
+	A3 = Instance.new('Attachment',Character['Left Arm'])
+Trail = Instance.new('Trail',Character)
+Trail.Attachment0 = A0
+Trail.Attachment1 = A1
+Trail.Texture = TrailSettings.Texture
+Trail.Color = TrailSettings.Color1
+Trail.Lifetime = TrailSettings.Lifetime
+local Trail2 = Trail:Clone()
+Trail2.Parent = Character
+Trail2.Attachment1 = A2
+local Trail3 = Trail:Clone()
+Trail3.Parent = Character
+Trail3.Attachment1 = A3
+local Trail6 = Trail:Clone()
+Trail6.Parent = Character
+Trail6.Attachment0 = A1
+Trail6.Attachment1 = A2
+local Trail7 = Trail:Clone()
+Trail7.Parent = Character
+Trail7.Attachment0 = A1
+Trail7.Attachment1 = A3
+	else
+	A0 = Instance.new('Attachment',Character[TrailSettings.R15Parts[1]])
+	A0R = Instance.new('Attachment',Character[TrailSettings.R15Parts[2]])
+	A1 = Instance.new('Attachment',Character.Head)
+	A2 = Instance.new('Attachment',Character['RightUpperArm'])
+	A2R = Instance.new('Attachment',Character['RightLowerArm'])
+	A3 = Instance.new('Attachment',Character['LeftUpperArm'])
+	A3R = Instance.new('Attachment',Character['LeftLowerArm'])
+Trail = Instance.new('Trail',Character)
+Trail.Attachment0 = A0
+Trail.Attachment1 = A1
+Trail.Texture = TrailSettings.Texture
+Trail.Color = TrailSettings.Color1
+Trail.Lifetime = TrailSettings.Lifetime
+local Trail2 = Trail:Clone()
+Trail2.Parent = Character
+Trail2.Attachment1 = A2
+local Trail3 = Trail:Clone()
+Trail3.Parent = Character
+Trail3.Attachment1 = A3
+local Trail6 = Trail:Clone()
+Trail6.Parent = Character
+Trail6.Attachment0 = A1
+Trail6.Attachment1 = A2
+local Trail7 = Trail:Clone()
+Trail7.Parent = Character
+Trail7.Attachment0 = A1
+Trail7.Attachment1 = A3
+--R15 Trails
+local Trail1R = Trail:Clone()
+Trail1R.Parent = Character
+Trail1R.Attachment1 = A2R
+local Trail2R = Trail:Clone()
+Trail2R.Parent = Character
+Trail2R.Attachment1 = A3R
+local Trail6R = Trail:Clone()
+Trail6.Parent = Character
+Trail6.Attachment0 = A1
+Trail6.Attachment1 = A2R
+local Trail7R = Trail:Clone()
+Trail7.Parent = Character
+Trail7.Attachment0 = A1
+Trail7.Attachment1 = A3R
+end
+end
+
+--Lower Body Function
+LowerBody = function()
+	if TrailSettings.R15 == false then
+		A4 = Instance.new('Attachment',Character['Right Leg'])
+		A5 = Instance.new('Attachment',Character['Left Leg'])
+local Trail4 = Trail:Clone()
+Trail4.Parent = Character
+Trail4.Attachment1 = A4
+local Trail5 = Trail:Clone()
+Trail5.Parent = Character
+Trail5.Attachment1 = A5
+local Trail8 = Trail:Clone()
+Trail8.Parent = Character
+Trail8.Attachment0 = A2
+Trail8.Attachment1 = A4
+Trail8.Color = TrailSettings.Color2
+local Trail9 = Trail:Clone()
+Trail9.Parent = Character
+Trail9.Attachment0 = A3
+Trail9.Attachment1 = A5
+Trail9.Color = TrailSettings.Color2
+local FT = Trail:Clone()
+FT.Parent = Character
+FT.Attachment0 = A4
+FT.Attachment1 = A5
+FT.Color = TrailSettings.Color2
+else
+		A4 = Instance.new('Attachment',Character['RightLowerLeg'])
+		A4R = Instance.new('Attachment',Character['RightUpperLeg'])
+		A5 = Instance.new('Attachment',Character['LeftLowerLeg'])
+		A5R = Instance.new('Attachment',Character['LeftUpperLeg'])
+		local Trail4 = Trail:Clone()
+Trail4.Parent = Character
+Trail4.Attachment1 = A4
+local Trail5 = Trail:Clone()
+Trail5.Parent = Character
+Trail5.Attachment1 = A5
+local Trail8 = Trail:Clone()
+Trail8.Parent = Character
+Trail8.Attachment0 = A2
+Trail8.Attachment1 = A4
+Trail8.Color = TrailSettings.Color2
+local Trail9 = Trail:Clone()
+Trail9.Parent = Character
+Trail9.Attachment0 = A3
+Trail9.Attachment1 = A5
+Trail9.Color = TrailSettings.Color2
+local FT = Trail:Clone()
+FT.Parent = Character
+FT.Attachment0 = A4
+FT.Attachment1 = A5
+FT.Color = TrailSettings.Color2
+--R15 Trails
+local Trail3R = Trail:Clone()
+Trail3R.Parent = Character
+Trail3R.Attachment1 = A4R
+local Trail4R = Trail:Clone()
+Trail4R.Parent = Character
+Trail4R.Attachment1 = A5R
+local Trail8 = Trail:Clone()
+Trail8.Parent = Character
+Trail8.Attachment0 = A2R
+Trail8.Attachment1 = A4R
+Trail8.Color = TrailSettings.Color2
+local Trail9 = Trail:Clone()
+Trail9.Parent = Character
+Trail9.Attachment0 = A3R
+Trail9.Attachment1 = A5R
+Trail9.Color = TrailSettings.Color2
+local FT2R = Trail:Clone()
+FT2R.Parent = Character
+FT2R.Attachment0 = A4R
+FT2R.Attachment1 = A5R
+FT2R.Color = TrailSettings.Color2
+end
+end
+
+--All Body Function calling Both Functions
+AllBody = function()
+	UpperBody()
+	LowerBody()
+end
+
+--Checking to make sure that Only some Variables are Selected else do All Body
+if TrailSettings.AllBody == true and TrailSettings.UpperBodyOnly == true and TrailSettings.LowerBodyOnly == true then
+	TrailSettings.UpperBodyOnly = false
+	TrailSettings.LowerBodyOnly = false
+elseif TrailSettings.AllBody == true and TrailSettings.UpperBodyOnly == false and TrailSettings.LowerBodyOnly == true then
+	TrailSettings.UpperBodyOnly = false
+	TrailSettings.LowerBodyOnly = false
+elseif TrailSettings.AllBody == true and TrailSettings.UpperBodyOnly == true and TrailSettings.LowerBodyOnly == false then
+	TrailSettings.UpperBodyOnly = false
+	TrailSettings.LowerBodyOnly = false
+elseif TrailSettings.AllBody == false and TrailSettings.UpperBodyOnly == true and TrailSettings.LowerBodyOnly == true then
+	TrailSettings.AllBody = true
+	TrailSettings.UpperBodyOnly = false
+	TrailSettings.LowerBodyOnly = false
+end
+
+--Call Trail Functions
+if TrailSettings.UpperBodyOnly == true then
+	UpperBody()
+	print('Called Upper Body Trail')
+elseif TrailSettings.LowerBodyOnly == true then
+	LowerBody()
+	print('Called Lower Body Trail')
+elseif TrailSettings.AllBody == true then
+	AllBody()
+	print('Called Full Body Trail')
+end
+
+--Trails for Accessories
+if TrailSettings.Accessories == true then
+for Index,Item in pairs(Character:GetChildren()) do
+	if Item:IsA'Accessory' then
+		local AA = Instance.new('Attachment',Item.Handle)
+		local ATrail = Trail:Clone()
+		ATrail.Parent = Character
+		ATrail.Attachment1 = AA
+	end
+end
+end
+
+--Extras
+if TrailSettings.Extras == true then
+	--Making an Invisible Platform Part
+local a = Instance.new('Part',Character)
+a.CanCollide = false
+a.Size = Vector3.new(2,.2,2)
+a.Transparency = 1
+
+--Constantly putting it under your feet
+if TrailSettings.R15 == false then
+	spawn(function()
+	game:GetService('RunService').RenderStepped:connect(function()
+		a.CFrame = Character.Torso.CFrame * CFrame.new(0,-3,0)
+	end)
+end)
+else
+	spawn(function()
+	game:GetService('RunService').RenderStepped:connect(function()
+		a.CFrame = Character[TrailSettings.R15Parts[2]].CFrame * CFrame.new(0,-2,0)
+	end)
+end)
+end
+
+--Make a Trail from both feet to the Platform
+spawn(function()
+	repeat wait() until Trail
+local AB = Instance.new('Attachment',a)
+local ABT = Trail:Clone()
+ABT.Parent = Character
+ABT.Attachment0 = A4
+ABT.Attachment1 = AB
+ABT.Color = TrailSettings.Color2
+local ABT2 = Trail:Clone()
+ABT2.Parent = Character
+ABT2.Attachment0 = A5
+ABT2.Attachment1 = AB
+ABT2.Color = TrailSettings.Color2
+end)
+end
+wait(math.randomseed(tick()))
+  local plr = game.Players.LocalPlayer
+  ch = plr.Character
+  local tor = ch.Torso
+  local head = ch.Head
+  local ra = ch["Right Arm"]
+  local la = ch["Left Arm"]
+  local rl = ch["Right Leg"]
+  local ll = ch["Left Leg"]
+  local rj = ch.HumanoidRootPart.RootJoint
+  local neck = tor.Neck
+  local rm = Instance.new("Weld", tor)
+  rm.C1 = CFrame.new(0, 0.5, 0)
+  rm.C0 = CFrame.new(1.5, 0.5, 0)
+  rm.Part0 = tor
+  rm.Part1 = ra
+  local lm = Instance.new("Weld", tor)
+  lm.C1 = CFrame.new(0, 0.5, 0)
+  lm.C0 = CFrame.new(-1.5, 0.5, 0)
+  lm.Part0 = tor
+  lm.Part1 = la
+  local rlm = Instance.new("Weld", tor)
+  rlm.C1 = CFrame.new(0, 1, 0)
+  rlm.C0 = CFrame.new(0.5, -1, 0)
+  rlm.Part0 = tor
+  rlm.Part1 = rl
+  local llm = Instance.new("Weld", tor)
+  llm.C1 = CFrame.new(0, 1, 0)
+  llm.C0 = CFrame.new(-0.5, -1, 0)
+  llm.Part0 = tor
+  llm.Part1 = ll
+  local hum = ch.Humanoid
+  for i, v in pairs(head:GetChildren()) do
+    if v.ClassName == "Sound" then
+      v:Destroy()
+    end
+  end
+  rj.C0 = CFrame.new()
+  rj.C1 = CFrame.new()
+  tor["Right Shoulder"]:Destroy()
+  tor["Left Shoulder"]:Destroy()
+  tor["Right Hip"]:Destroy()
+  tor["Left Hip"]:Destroy()
+  neck.C0 = CFrame.new(0, 1, 0)
+  neck.C1 = CFrame.new(0, -0.5, 0)
+  rmC0 = rm.C0
+  rmC1 = rm.C1
+  lmC0 = lm.C0
+  lmC1 = lm.C1
+  nC0 = neck.C0
+  nC1 = neck.C1
+  rjC0 = rj.C0
+  rjC1 = rj.C1
+  rlmC0 = rlm.C0
+  rlmC1 = rlm.C1
+  llmC0 = llm.C0
+  llmC1 = llm.C1
+  local defWS = 25
+  local defJP = 75
+  hum.WalkSpeed = defWS
+  hum.JumpPower = defJP
+  ch:WaitForChild("Animate"):Destroy()
+  hum:WaitForChild("Animator"):Destroy()
+  local mo = plr:GetMouse()
+  local cam = workspace.CurrentCamera
+
+  local mainGui = Instance.new("ScreenGui", plr.PlayerGui)
+  mainGui.Name = "OptionsGui"
+  local VanishLabel = Instance.new("TextLabel", mainGui)
+  VanishLabel.Name = "fly1"
+  VanishLabel.BackgroundTransparency = 0.45
+  VanishLabel.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+  VanishLabel.BorderSizePixel = 0
+  VanishLabel.Size = UDim2.new(0, 145, 0, 40)
+  VanishLabel.Position = UDim2.new(0, -144, 0.5, -41)
+  VanishLabel.Text = "Sonic remade xd"
+  VanishLabel.Font = Enum.Font.SourceSansLight
+  VanishLabel.FontSize = Enum.FontSize.Size24
+  VanishLabel.TextColor3 = Color3.new(1, 1, 1)
+  VanishLabel.TextStrokeTransparency = 0
+  VanishLabel:TweenPosition(UDim2.new(0, 1, 0.5, -41), "Out", "Bounce", 1, false, nil)
+  local anim = {
+    idle = {priority = 1},
+    walk = {priority = 1},
+    descend = {priority = 2},
+    jump = {priority = 3},
+    hoodon = {priority = 4},
+    hoodoff = {priority = 4}
+  }
+  local lastAnim
+  local lastPriority = 0
+  local speed
+  local doingMove = false
+  local hoodison = false
+  function swait(num)
+    if num == 0 or num == nil then
+      game:service("RunService").RenderStepped:wait()
+    else
+      for i = 0, num do
+        game:service("RunService").RenderStepped:wait()
+      end
+    end
+  end
+  function sound(id, vol, pitch, parent)
+    local s = Instance.new("Sound", parent)
+    s.SoundId = "http://www.roblox.com/asset/?id=" .. id .. ""
+    s.Volume = vol
+    s.Pitch = pitch
+    game.Debris:AddItem(s, 10)
+    s:play()
+    return s
+  end
+  function randomFootstep()
+    local x = math.random(855, 1155)
+    sound(157174024, 2, x / 1000, tor)
+  end
+  function removeDecals(p)
+    for i, v in pairs(p:GetChildren()) do
+      if v.ClassName == "Decal" then
+        v:Destroy()
+      end
+    end
+  end
+  local EP = Instance.new("Model", ch)
+  EP.Name = "ExtraParts"
+  function vignette(parent, col, mat, loop)
+    for i, v in pairs(parent:GetChildren()) do
+      if v:IsA("BasePart") and v ~= hood then
+        do
+          local c = v:clone()
+          c.Parent = EP
+          c.Anchored = true
+          c.CanCollide = false
+          c.Material = mat
+          c.BrickColor = col
+          c:BreakJoints()
+          removeDecals(c)
+          coroutine.resume(coroutine.create(function()
+            for i = 1, loop do
+              c.Transparency = i / loop
+              swait()
+            end
+            c:Destroy()
+          end))
+        end
+      end
+    end
+  end
+  function doBrick(parent, pos, cf, size, colour, material, transparency, a, cc, bs, bts, fs, ls, rs, ts)
+    local p = Instance.new("Part", parent)
+    p.BrickColor = colour
+    p.Material = material
+    p.Transparency = transparency
+    p.Anchored = a
+    p.CanCollide = cc
+    p.FormFactor = "Custom"
+    p.Size = size
+    p.BackSurface = bs
+    p.BottomSurface = bts
+    p.FrontSurface = fs
+    p.LeftSurface = ls
+    p.RightSurface = rs
+    p.TopSurface = ts
+    p.Position = pos
+    p.CFrame = p.CFrame * cf
+    return p
+  end
+  function doMesh(parent, meshType, meshId, scale)
+    local m = Instance.new("SpecialMesh", parent)
+    m.MeshType = meshType
+    m.MeshId = meshId
+    m.Scale = scale
+    return m
+  end
+  function magicBrick(pos, cf, size, colour, material, transparency, a, cc, bs, bts, fs, ls, rs, ts, meshType, meshId, scale, scaleAdd, loop, loopTransparency, repeatloop, repeatLoopWait, loopCFrame)
+    local cw1 = coroutine.wrap(function()
+      for i = 1, repeatloop do
+        do
+          local x = doBrick(EP, pos, cf, size, colour, material, transparency, a, cc, bs, bts, fs, ls, rs, ts)
+          local z = doMesh(x, meshType, meshId, scale)
+          local cw2 = coroutine.wrap(function()
+            for i = 1, loop do
+              if loopTransparency then
+                x.Transparency = i / loop
+                z.Scale = z.Scale + scaleAdd
+                x.CFrame = x.CFrame * loopCFrame
+                wait()
+              else
+                z.Scale = z.Scale + scaleAdd
+                x.CFrame = x.CFrame * loopCFrame
+              end
+            end
+            x:Destroy()
+          end)
+          coroutine.resume(coroutine.create(function()
+            for i = 1, repeatloop do
+              cw2()
+              swait(repeatLoopWait)
+            end
+          end))
+        end
+      end
+    end)
+    cw1()
+  end
+  function animate(x)
+    local calledAnim = anim[x]
+    if calledAnim == lastAnim then
+      return
+    end
+    if calledAnim.priority >= lastPriority and calledAnim ~= lastAnim then
+      lastAnim = calledAnim
+      lastPriority = lastAnim.priority
+      if calledAnim == anim.idle then
+        local thisAnim = calledAnim
+        speed = 0.25
+        for i = 0, 0.25, 0.1 * speed do
+          if lastAnim ~= thisAnim then
+            break
+          end
+          rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(12), math.rad(13), math.rad(15)), speed)
+          lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(14), math.rad(-13), math.rad(-15)), speed)
+          rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(-13), math.rad(-45), math.rad(0)), speed)
+          llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(13), math.rad(-45), math.rad(0)), speed)
+          rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(0), math.rad(45), math.rad(0)), speed)
+          neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(-13), math.rad(-45), math.rad(0)), speed)
+          rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0, 0.15), speed)
+          lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0.15), speed)
+          rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(-0.05, -0.4, 0.2), speed)
+          llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0.15, -0.35, 0.2), speed)
+          rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0.4, 0), speed)
+          neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), speed)
+          if hoodison then
+            hoodW.C0 = hoodW.C0:lerp(hoodC0 * CFrame.Angles(math.rad(-80), 0, 0), speed)
+            hoodW.C1 = hoodW.C1:lerp(hoodC1 * CFrame.new(0, -0.67, -0.45), speed)
+          end
+          swait()
+        end
+        while true do
+          if lastAnim ~= thisAnim then
+            break
+          end
+          for i = 0, 0.8, 0.1 * speed do
+            if lastAnim ~= thisAnim then
+              break
+            end
+            rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(12), math.rad(13), math.rad(8)), i * speed)
+            lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(14), math.rad(-13), math.rad(-8)), i * speed)
+            rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(-13), math.rad(-45), math.rad(0)), i * speed)
+            llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(13), math.rad(-45), math.rad(0)), i * speed)
+            rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(0), math.rad(45), math.rad(0)), i * speed)
+            neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(0), math.rad(-45), math.rad(0)), i * speed)
+            rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0, 0.15), i * speed)
+            lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0.15), i * speed)
+            rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(-0.05, -0.2, 0.2), i * speed)
+            llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0.15, -0.2, 0.2), i * speed)
+            rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0.2, 0), i * speed)
+            neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), i * speed)
+            if hoodison then
+              hoodW.C0 = hoodW.C0:lerp(hoodC0 * CFrame.Angles(math.rad(-80), 0, 0), speed)
+              hoodW.C1 = hoodW.C1:lerp(hoodC1 * CFrame.new(0, -0.67, -0.45), speed)
+            end
+            swait()
+          end
+          for i = 0, 0.8, 0.1 * speed do
+            if lastAnim ~= thisAnim then
+              break
+            end
+            rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(12), math.rad(13), math.rad(15)), i * speed)
+            lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(14), math.rad(-13), math.rad(-15)), i * speed)
+            rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(-13), math.rad(-45), math.rad(0)), i * speed)
+            llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(13), math.rad(-45), math.rad(0)), i * speed)
+            rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(0), math.rad(45), math.rad(0)), i * speed)
+            neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(-13), math.rad(-45), math.rad(0)), i * speed)
+            rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0, 0.15), i * speed)
+            lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0.15), i * speed)
+            rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(-0.05, -0.4, 0.2), i * speed)
+            llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0.15, -0.35, 0.2), i * speed)
+            rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0.4, 0), i * speed)
+            neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), i * speed)
+            if hoodison then
+              hoodW.C0 = hoodW.C0:lerp(hoodC0 * CFrame.Angles(math.rad(-80), 0, 0), speed)
+              hoodW.C1 = hoodW.C1:lerp(hoodC1 * CFrame.new(0, -0.67, -0.45), speed)
+            end
+            swait()
+          end
+        end
+      end
+      if calledAnim == anim.walk then
+        local thisAnim = calledAnim
+        speed = 0.45
+        while true do
+          if lastAnim ~= thisAnim then
+            break
+          end
+          for i = 0, 0.8, 0.1 * speed do
+            if lastAnim ~= thisAnim then
+              break
+            end
+            rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(-24), math.rad(13), math.rad(8)), 0.2)
+            lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(-24), math.rad(-13), math.rad(-8)), 0.2)
+            rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(65 + tor.RotVelocity.Y / 20), math.rad(0), -tor.RotVelocity.Y / 10), i * speed)
+            llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(-45), math.rad(0), -tor.RotVelocity.Y / 10), i * speed)
+            rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(-45), -tor.RotVelocity.Y / 10, math.rad(0)), i * speed)
+            neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(35), math.rad(0), -tor.RotVelocity.Y / 20), i * speed)
+            rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0, 0), i * speed)
+            lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0), i * speed)
+            rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(-0.05, 0.4, 0), i * speed)
+            llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0.05, 0, 0), i * speed)
+            rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0, 0), i * speed)
+            neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), i * speed)
+            if hoodison then
+              hoodW.C0 = hoodW.C0:lerp(hoodC0 * CFrame.Angles(math.rad(-65), 0, 0), speed)
+              hoodW.C1 = hoodW.C1:lerp(hoodC1 * CFrame.new(0, -0.67, -0.3), speed)
+            end
+            swait()
+          end
+          randomFootstep()
+          for i = 0, 0.8, 0.1 * speed do
+            if lastAnim ~= thisAnim then
+              break
+            end
+            rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(-24), math.rad(13), math.rad(8)), 0.2)
+            lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(-24), math.rad(-13), math.rad(-8)), 0.2)
+            rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(-45), math.rad(0), -tor.RotVelocity.Y / 10), i * speed)
+            llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(65 + tor.RotVelocity.Y / 20), math.rad(0), -tor.RotVelocity.Y / 10), i * speed)
+            rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(-45), -tor.RotVelocity.Y / 10, math.rad(0)), i * speed)
+            neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(35), math.rad(0), -tor.RotVelocity.Y / 20), i * speed)
+            rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0, 0), i * speed)
+            lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0), i * speed)
+            rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(-0.05, 0, 0), i * speed)
+            llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0.05, 0.4, 0), i * speed)
+            rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0, 0), i * speed)
+            neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), i * speed)
+            if hoodison then
+              hoodW.C0 = hoodW.C0:lerp(hoodC0 * CFrame.Angles(math.rad(-65), 0, 0), speed)
+              hoodW.C1 = hoodW.C1:lerp(hoodC1 * CFrame.new(0, -0.67, -0.3), speed)
+            end
+            swait()
+          end
+          randomFootstep()
+        end
+      end
+      if calledAnim == anim.jump then
+        local thisAnim = calledAnim
+        speed = 0.15
+        for i = 0, 0.25, 0.1 * speed do
+          if lastAnim ~= thisAnim then
+            break
+          end
+          rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(24), math.rad(13), math.rad(15)), speed)
+          lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(24), math.rad(-13), math.rad(-15)), speed)
+          rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(-15), math.rad(0), math.rad(0)), speed)
+          llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(-15), math.rad(0), math.rad(0)), speed)
+          rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(-13), math.rad(0), math.rad(0)), speed)
+          rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0, 0.25), speed)
+          lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0.25), speed)
+          rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(-0.05, -0.4, 0.2), speed)
+          llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0.05, -0.4, 0.2), speed)
+          rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0, 0), speed)
+          neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), speed)
+          swait()
+        end
+        lastAnim = nil
+        lastPriority = 0
+      end
+      if calledAnim == anim.descend then
+        local thisAnim = calledAnim
+        speed = 0.15
+        for i = 0, 0.25, 0.1 * speed do
+          if lastAnim ~= thisAnim then
+            break
+          end
+          rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(45), math.rad(13), math.rad(15)), speed)
+          lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(45), math.rad(-13), math.rad(-15)), speed)
+          rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(-15), math.rad(0), math.rad(0)), speed)
+          llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(-15), math.rad(0), math.rad(0)), speed)
+          rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(25), math.rad(0), math.rad(0)), speed)
+          neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(-24), math.rad(0), math.rad(0)), speed)
+          rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0, 0.25), speed)
+          lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0.25), speed)
+          rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(-0.05, -0.4, 0.2), speed)
+          llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0.05, -0.4, 0.2), speed)
+          rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0, 0), speed)
+          neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), speed)
+          swait()
+        end
+        lastAnim = nil
+        lastPriority = 0
+      end
+      if calledAnim == anim.hoodon then
+        local thisAnim = calledAnim
+        speed = 0.15
+        for i = 0, 0.25, 0.1 * speed do
+          if lastAnim ~= thisAnim then
+            break
+          end
+          rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(-110), math.rad(0), math.rad(-45)), speed)
+          lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(-8)), speed)
+          rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0.2, 0), speed)
+          lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0), speed)
+          rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(0, 0, 0), speed)
+          llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0, 0, 0), speed)
+          rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0, 0), speed)
+          neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), speed)
+          swait()
+        end
+        sound(152206206, 1, 1, hood)
+        sound(588735155, 1, 1, hood)
+        magicBrick(Vector3.new(0, 0, 0), tor.CFrame, Vector3.new(1, 1, 1), BrickColor.new("Really black"), "Neon", 0, true, false, 10, 10, 10, 10, 10, 10, "Sphere", "", Vector3.new(2, 2, 2), Vector3.new(0.25, 0.8, 0.25), 14, true, 1, 0, CFrame.new(0, 0, 0))
+        magicBrick(Vector3.new(0, 0, 0), tor.CFrame, Vector3.new(1, 1, 1), BrickColor.new("Black"), "Neon", 0, true, false, 10, 10, 10, 10, 10, 10, "Sphere", "", Vector3.new(2, 1, 2), Vector3.new(1, 2, 1), 14, true, 1, 0, CFrame.new(0, 0, 0))
+        for i = 0, 0.25, 0.1 * speed do
+          if lastAnim ~= thisAnim then
+            break
+          end
+          rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(90), math.rad(0), math.rad(-25)), speed)
+          lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(-12), math.rad(0), math.rad(-16)), speed)
+          rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0.2, 0), speed)
+          lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0), speed)
+          rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(0, 0, 0), speed)
+          llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0, 0, 0), speed)
+          rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0, 0), speed)
+          neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), speed)
+          hoodW.C0 = hoodW.C0:lerp(hoodC0 * CFrame.Angles(math.rad(-80), 0, 0), speed)
+          hoodW.C1 = hoodW.C1:lerp(hoodC1 * CFrame.new(0, -0.67, -0.45), speed)
+          hoodM.Scale = hoodM.Scale:lerp(hoodScale + Vector3.new(0.15, 0, 0), speed)
+          swait()
+        end
+        lastAnim = nil
+        lastPriority = 0
+      end
+      if calledAnim == anim.hoodoff then
+        local thisAnim = calledAnim
+        speed = 0.15
+        for i = 0, 0.25, 0.1 * speed do
+          if lastAnim ~= thisAnim then
+            break
+          end
+          rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(190), math.rad(0), math.rad(-45)), speed)
+          lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(-8)), speed)
+          rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0.2, 0), speed)
+          lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0), speed)
+          rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(0, 0, 0), speed)
+          llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0, 0, 0), speed)
+          rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0, 0), speed)
+          neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), speed)
+          swait()
+        end
+        sound(152206246, 1, 1, hood)
+        for i = 0, 0.25, 0.1 * speed do
+          if lastAnim ~= thisAnim then
+            break
+          end
+          rm.C0 = rm.C0:lerp(rmC0 * CFrame.Angles(math.rad(-12), math.rad(0), math.rad(-25)), speed)
+          lm.C0 = lm.C0:lerp(lmC0 * CFrame.Angles(math.rad(-12), math.rad(0), math.rad(-16)), speed)
+          rlm.C0 = rlm.C0:lerp(rlmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          llm.C0 = llm.C0:lerp(llmC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          rj.C0 = rj.C0:lerp(rjC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          neck.C0 = neck.C0:lerp(nC0 * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)), speed)
+          rm.C1 = rm.C1:lerp(rmC1 * CFrame.new(0, 0.2, 0), speed)
+          lm.C1 = lm.C1:lerp(lmC1 * CFrame.new(0, 0, 0), speed)
+          rlm.C1 = rlm.C1:lerp(rlmC1 * CFrame.new(0, 0, 0), speed)
+          llm.C1 = llm.C1:lerp(llmC1 * CFrame.new(0, 0, 0), speed)
+          rj.C1 = rj.C1:lerp(rjC1 * CFrame.new(0, 0, 0), speed)
+          neck.C1 = neck.C1:lerp(nC1 * CFrame.new(0, 0, 0), speed)
+          hoodW.C0 = hoodW.C0:lerp(hoodC0 * CFrame.Angles(0, 0, 0), speed)
+          hoodW.C1 = hoodW.C1:lerp(hoodC1 * CFrame.new(0, 0, 0), speed)
+          hoodM.Scale = hoodM.Scale:lerp(hoodScale + Vector3.new(0, 0, 0), speed)
+          swait()
+        end
+        lastAnim = nil
+        lastPriority = 0
+      end
+    end
+  end
+  local vanished = false
+  function vanish()
+    head.face.Texture = ""
+    hum.WalkSpeed = defWS * 2
+    for i, v in pairs(ch:GetChildren()) do
+      if v:IsA("BasePart") then
+        coroutine.resume(coroutine.create(function()
+          for i = 1, 40 do
+            v.Transparency = v.Transparency + 0.025
+            swait()
+          end
+        end))
+      end
+    end
+    for i, v in pairs(daggerModel:GetChildren()) do
+      if v:IsA("BasePart") then
+        coroutine.resume(coroutine.create(function()
+          for i = 1, 40 do
+            v.Transparency = v.Transparency + 0.025
+            swait()
+          end
+        end))
+      end
+    end
+  end
+  function unvanish()
+    head.face.Texture = "http://www.roblox.com/asset/?id=144080495"
+    hum.WalkSpeed = defWS
+    for i, v in pairs(ch:GetChildren()) do
+      if v:IsA("BasePart") then
+        coroutine.resume(coroutine.create(function()
+          for i = 1, 40 do
+            v.Transparency = v.Transparency - 0.025
+            swait()
+          end
+        end))
+      end
+    end
+    for i, v in pairs(daggerModel:GetChildren()) do
+      if v:IsA("BasePart") then
+        coroutine.resume(coroutine.create(function()
+          for i = 1, 40 do
+            v.Transparency = v.Transparency - 0.025
+            swait()
+          end
+        end))
+      end
+    end
+  end
+  local daggerEquipped = false
+  function hoodOn()
+    if not doingMove then
+      doingMove = true
+      hoodison = true
+      animate("hoodon")
+      doingMove = false
+    end
+  end
+  function hoodOff()
+    if not doingMove then
+      doingMove = true
+      hoodison = false
+      animate("hoodoff")
+      doingMove = false
+    end
+  end
+  mo.KeyDown:connect(function(key)
+    if key == "f" then
+      if hoodison then
+        if vanished then
+          vanished = false
+          unvanish()
+        end
+        hoodOff()
+      elseif not hoodison then
+        if not vanished then
+          vanished = true
+          vanish()
+        end
+        hoodOn()
+      end
+    end
+    if key == "g" then
+      if not daggerEquipped then
+        daggerEquipped = true
+        daggertoRA()
+      elseif daggerEquipped then
+        daggerEquipped = false
+        daggertotorso()
+      end
+    end
+  end)
+  coroutine.resume(coroutine.create(function()
+    game:GetService("RunService").RenderStepped:connect(function()
+      if hum.Jump then
+        animate("jump")
+      end
+      if Vector3.new(tor.Velocity.X, 0, tor.Velocity.Z).magnitude < 2.5 and hum:GetState() ~= Enum.HumanoidStateType.Freefall then
+        animate("idle")
+      end
+      if Vector3.new(tor.Velocity.X, 0, tor.Velocity.Z).magnitude >= 2.5 and hum:GetState() ~= Enum.HumanoidStateType.Freefall then
+        animate("walk")
+      end
+      if Vector3.new(0, tor.Velocity.Y, 0).magnitude >= 5 and hum:GetState() == Enum.HumanoidStateType.Freefall then
+        animate("descend")
+      end
+    end)
+  end))
+  coroutine.resume(coroutine.create(function()
+    while swait(10) do
+      if hoodison then
+        vignette(ch, BrickColor.new("Black"), "Neon", 15)
+      end
+    end
+  end))
+Sound = Instance.new("Sound")
+Sound.Volume = 1
+Sound.Parent = game.Players.LocalPlayer.Character.Head
+Sound.SoundId = "rbxassetid://149573450"
+Sound.Looped = true
+Sound0:Play()
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 70
+
